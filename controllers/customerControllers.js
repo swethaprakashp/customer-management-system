@@ -71,7 +71,7 @@ exports.deleteCustomer = async (req, res) => {
     catch (err) {
         res.status(500).send({
             message:
-                err.message || "Some error occurred while deleting customer data."
+                err.message || "Some error occurred while deleting a customer."
         });;
     }
 }
