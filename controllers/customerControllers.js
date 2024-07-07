@@ -15,7 +15,7 @@ exports.createCustomer = async (req, res) => {
             city: req.body.city,
         });
         await customer.save();
-        res.send({ message: "Customer created successfully!" });
+        res.status(200).send({ message: "Customer created successfully!" });
     }
     catch (err) {
         res.status(500).send({
@@ -29,7 +29,7 @@ exports.createCustomer = async (req, res) => {
 exports.getAllCustomers = async (req, res) => {
     try {
         const customers = await Customer.find();
-        res.send(customers);
+        res.status(200).send(customers);
     }
     catch (err) {
         res.status(500).send({
@@ -47,7 +47,7 @@ exports.updateCustomer = async (req, res) => {
         if (!customer) {
             return res.status(404).send({ message: "Customer not found." });
         }
-        res.send(customer);
+        res.status(200).send(customer);
     }
     catch (err) {
         res.status(500).send({
@@ -62,11 +62,10 @@ exports.deleteCustomer = async (req, res) => {
     try {
         const customerId = { id : req.params.id };
         const customer = await Customer.findOneAndDelete(customerId);
-        console.log('cus', customer)
         if (!customer) {
             return res.status(404).send({ message: "Customer not found." });
         }
-        res.send({ message: "Customer deleted successfully!" });
+        res.status(200).send({ message: "Customer deleted successfully!" });
     }
     catch (err) {
         res.status(500).send({
@@ -80,7 +79,7 @@ exports.deleteCustomer = async (req, res) => {
 exports.deleteAllCustomers = async (req, res) => {
     try {
         const deletedCustomers = await Customer.deleteMany();
-        res.send({
+        res.status(200).send({
             message: `${deletedCustomers.deletedCount} customers deleted successfully!`
         });
     }
