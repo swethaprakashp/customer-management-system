@@ -59,6 +59,7 @@ exports.updateCustomer = async (req, res) => {
 
 //Delete API to delete a customer
 exports.deleteCustomer = async (req, res) => {
+    console.log('hello')
     try {
         const customerId = { id : req.params.id };
         const customer = await Customer.findOneAndDelete(customerId);
@@ -75,10 +76,14 @@ exports.deleteCustomer = async (req, res) => {
     }
 }
 
-//Delete All API to delete all customers
-exports.deleteAllCustomers = async (req, res) => {
+//Delete All API to delete multiple customers
+exports.deleteManyCustomers = async (req, res) => {
+    const { ids} = req.body;
     try {
-        const deletedCustomers = await Customer.deleteMany();
+        const deletedCustomers = await Customer.deleteMany({
+            id : { $in: ids }
+        });
+        console.log(deletedCustomers)
         res.status(200).send({
             message: `${deletedCustomers.deletedCount} customers deleted successfully!`
         });
